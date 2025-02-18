@@ -25,9 +25,7 @@ public class TaskOne {
         reverseArray(array);
         System.out.println("Стало: " + Arrays.toString(array));
 
-
         scanner.close();
-
 
     }
 
