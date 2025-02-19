@@ -1,38 +1,47 @@
-import java.util.Arrays;
-import java.util.Scanner;
-
+import java.util.*;
 
 public class TaskTwo {
     public static void main(String[] args) {
-        //:Todo: Вам предоставляется массив элементов, и ваша задача - определить, есть ли
-        //  дубликаты (повторяющиеся элементы) в массиве.
-        //  Если есть, выведите информацию о том, какие элементы являются дубликатами и их индексы.
-
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Введите длину массива: ");
-        int length = scanner.nextInt();
+        // 1. Ввод массива
+        System.out.print("Введите элементы массива через пробел: ");
+        // Читаем всю строку и разбиваем ее на массив строк по пробелам
+        String[] input = scanner.nextLine().split(" ");
+        String[] array = new String[input.length];
+        // Копируем элементы из input в array
+        System.arraycopy(input, 0, array, 0, input.length);
 
-        int[] array = new int[length];
+        // 2. Поиск дубликатов
+        // - Значение (List<Integer>): список индексов, где встречается элемент
+        Map<String, List<Integer>> duplicates = new HashMap<>();
 
-        System.out.print("Введите элементы массива:");
-        for (int i = 0; i < length; i++) {
-            array[i] = scanner.nextInt();
-
+        // Проходим по всем элементам массива
+        for (int i = 0; i < array.length; i++) {
+            String element = array[i];
+            // Если элемента еще нет в HashMap, добавляем его с пустым списком индексов
+            if (!duplicates.containsKey(element)) {
+                duplicates.put(element, new ArrayList<>());
+            }
+            // Добавляем текущий индекс (i) в список индексов для этого элемента
+            duplicates.get(element).add(i);
         }
 
-        for (int i = 0; i < array.length; i++) {
-            for (int j = i + 1; j < array.length; j++) {
-                if (array[i] == array[j]) {
-
-                    System.out.println("Повторяющийся элемент: " + array[i]);
-                }
+        // 3. Вывод результатов
+        boolean hasDuplicates = false; // Флаг, есть ли дубликаты
+        // Проходим по всем записям в HashMap
+        for (Map.Entry<String, List<Integer>> entry : duplicates.entrySet()) {
+            // Если у элемента больше одного индекса, это дубликат
+            if (entry.getValue().size() > 1) {
+                hasDuplicates = true;
+                System.out.println("Элемент '" + entry.getKey() + "' повторяется на индексах: " + entry.getValue());
             }
         }
 
+        if (!hasDuplicates) {
+            System.out.println("Дубликатов не найдено.");
+        }
 
-
-        System.out.println("Массив: " + Arrays.toString(array));
+        scanner.close();
     }
 }
-
