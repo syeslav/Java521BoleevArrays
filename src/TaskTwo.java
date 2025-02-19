@@ -2,6 +2,8 @@ import java.util.*;
 
 public class TaskTwo {
     public static void main(String[] args) {
+        // Todo:Вам предоставляется массив элементов, и ваша задача - определить,
+        //  есть ли дубликаты (повторяющиеся элементы) в массиве.
         Scanner scanner = new Scanner(System.in);
 
         // 1. Ввод массива
